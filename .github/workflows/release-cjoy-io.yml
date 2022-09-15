@@ -24,7 +24,7 @@ jobs:
         run: docker-compose build loconotion
 
       - name: Compile site
-        run: LOCONOTION_LOCAL_DIST=$(pwd)/dist docker-compose run loconotion https://cjoy.notion.site/Chris-Joy-5dcf98f87ffc45cc8bcde91c518d6d9d --verbose --timeout 20
+        run: LOCONOTION_LOCAL_DIST=$(pwd)/dist docker-compose run loconotion https://cjoy.notion.site/Chris-Joy-5dcf98f87ffc45cc8bcde91c518d6d9d --verbose --timeout 10000
 
       - name: Archive artifacts
         uses: actions/upload-artifact@master
