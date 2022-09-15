@@ -14,9 +14,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: >-
           docker-compose build loconotion && LOCONOTION_LOCAL_DIST=$(pwd)/dist
-          docker-compose run loconotion
-          https://cjoy.notion.site/Chris-Joy-5dcf98f87ffc45cc8bcde91c518d6d9d
-          --verbose --timeout 10000
+          docker-compose run loconotion config/cjoy-io.toml --timeout 10000
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

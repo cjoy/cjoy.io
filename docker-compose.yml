@@ -8,4 +8,5 @@ services:
     image: loconotion:latest
     volumes:
       - ${LOCONOTION_LOCAL_DIST:-/tmp/}:/app/loconotion/dist
+      - ./config/:/app/loconotion/config
     restart: always
