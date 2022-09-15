@@ -33,6 +33,8 @@ jobs:
           path: dist
 
   publish:
+    name: Publish site
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
