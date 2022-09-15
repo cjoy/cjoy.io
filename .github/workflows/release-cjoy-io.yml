@@ -1,0 +1,52 @@
+name: Release cjoy-io
+
+on:
+  push:
+    branches:
+      - master
+  repository_dispatch:
+      types: [release-cjoy-io]
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@master
+
+      - name: Checkout latest submodules
+        run: git submodule update --init --recursive --remote
+
+      - name: Build docker image
+        run: docker-compose build loconotion
+
+      - name: Compile site
+        run: LOCONOTION_LOCAL_DIST=$(pwd)/dist docker-compose run loconotion https://cjoy.notion.site/Chris-Joy-5dcf98f87ffc45cc8bcde91c518d6d9d --verbose --timeout 20
+
+      - name: Archive artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: dist
+          path: dist
+
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@master
+
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist
+          path: dist
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          expires: 30d
+          projectId: chris-joy
