@@ -21,3 +21,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHRIS_JOY }}'
           channelId: live
           projectId: chris-joy
+      - uses: gautamkrishnar/keepalive-workflow@v1
